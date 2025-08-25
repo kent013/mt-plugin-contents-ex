@@ -1,0 +1,12 @@
+id: ContentsEx
+name: ContentsEx
+description: Extended Contents tag that can optionally include unpublished content
+version: 1.0
+author_name: Kentaro ISHITOYA
+author_link: https://github.com/kent013
+plugin_link: https://github.com/kent013/mt-plugin-contents-ex
+doc_link: https://github.com/kent013/mt-plugin-contents-ex
+
+tags:
+  block:
+    ContentsEx: ContentsEx::Plugin::_hdlr_contents_ex

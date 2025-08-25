@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ContentsEx Plugin Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .test-title { font-weight: bold; margin-bottom: 10px; }
+        .content-item { margin: 5px 0; padding: 5px; background: #f5f5f5; }
+        .status-draft { color: #666; }
+        .status-published { color: #090; }
+        .status-review { color: #f90; }
+        .status-future { color: #09f; }
+    </style>
+</head>
+<body>
+    <h1>ContentsEx Plugin Test</h1>
+
+    <div class="test-section">
+        <div class="test-title">Test 1: Default behavior (same as MTContents - published only)</div>
+        <mt:ContentsEx content_type="news" limit="10">
+            <div class="content-item">
+                <strong><mt:ContentLabel /></strong> -
+                Status: <span class="status-published">Published</span> -
+                ID: <mt:ContentID />
+            </div>
+        </mt:ContentsEx>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 2: Include unpublished = 0 (explicitly set - published only)</div>
+        <mt:ContentsEx content_type="news" include_unpublished="0" limit="10">
+            <div class="content-item">
+                <strong><mt:ContentLabel /></strong> -
+                Status: <span class="status-published">Published</span> -
+                ID: <mt:ContentID />
+            </div>
+        </mt:ContentsEx>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 3: Include unpublished = 1 (all statuses)</div>
+        <mt:ContentsEx content_type="news" include_unpublished="1" limit="10">
+            <div class="content-item">
+                <strong><mt:ContentLabel /></strong> -
+                Status:
+                <mt:If tag="ContentStatus" eq="Draft">
+                    <span class="status-draft">Draft</span>
+                <mt:ElseIf tag="ContentStatus" eq="Publish">
+                    <span class="status-published">Published</span>
+                <mt:ElseIf tag="ContentStatus" eq="Review">
+                    <span class="status-review">Review</span>
+                <mt:ElseIf tag="ContentStatus" eq="Future">
+                    <span class="status-future">Scheduled</span>
+                <mt:Else>
+                    <span>Unknown</span>
+                </mt:If> -
+                ID: <mt:ContentID />
+            </div>
+        <mt:Else>
+            <div>No contents found</div>
+        </mt:ContentsEx>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 4: With sorting and other parameters</div>
+        <mt:ContentsEx content_type="news" include_unpublished="1" sort_by="authored_on" sort_order="descend" limit="5">
+            <div class="content-item">
+                <strong><mt:ContentLabel /></strong> -
+                Date: <mt:ContentDate format="%Y-%m-%d %H:%M:%S" /> -
+                Status: <mt:ContentStatus />
+            </div>
+        </mt:ContentsEx>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 5: Count comparison</div>
+        <p>Published only count: <mt:ContentsEx content_type="news"><mt:ContentsCount /></mt:ContentsEx></p>
+        <p>All contents count: <mt:ContentsEx content_type="news" include_unpublished="1"><mt:ContentsCount /></mt:ContentsEx></p>
+    </div>
+</body>
+</html>
